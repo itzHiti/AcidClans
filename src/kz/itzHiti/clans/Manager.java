@@ -74,14 +74,14 @@ public class Manager extends JavaPlugin
         this.setupEconomy();
         new OurCoolPlaceholders().register();
         getLogger().info("Searching for encryption key...");
-        if (!encryption_key.equals("RNIagxbCtaCSDJczNkj4KjbXOcI7mxeD")) {
+        /*if (!encryption_key.equals("RNIagxbCtaCSDJczNkj4KjbXOcI7mxeD")) {
             getLogger().warning("Encryption key was not found. Disabling plugin!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
-        }
-        else {
+        }*/
+        //else {
             getLogger().info("Encryption key has been found!");
-        }
+        //}
     }
 
     public void onDisable() {
