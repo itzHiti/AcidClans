@@ -1,0 +1,14 @@
+#Плагин разработан itzHiti для приватного пользования.
+#Если Вы обнаружите какой-либо баг, незамедлительно сообщите мне.
+#VK: https://vk.com/hitioff
+
+name: AcidClans
+main: kz.itzHiti.clans.Manager
+author: itzHiti
+version: 1.3
+commands:
+  clan:
+    aliases: [c]
+  clanchat:
+    aliases: [cc]
+  ch:

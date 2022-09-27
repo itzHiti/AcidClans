@@ -1,0 +1,307 @@
+#Плагин разработан itzHiti для приватного пользования.
+#Если Вы обнаружите какой-либо баг, незамедлительно сообщите мне.
+#VK: https://vk.com/hitioff
+
+#Зависимости: Vault, HolographicDisplays, PlaceholderAPI (Система кланов без этих плагинов не будет работать!)
+
+#Плейсхолдеры от PlaceHolderAPI:
+# %clan_tag_chat%
+# %clan_tag_tab%
+# %clan_tag%
+
+#Права
+#- bclans.user (Права обычного пользователя)
+#- bclans.admin (Права администратора)
+
+#Все команды игроков указаны ниже, команды администратора:
+#- /clan listtop - Получить список всех существующих топов сервера
+#- /clan settop [название топа] [значения топа] - Создать голографический топ кланов. Значения для топа: MEMBERS, BANK
+#- /clan deltop [название топа] - Удалить голографический топ кланов
+#- /clan top-reload - Перезагрузить голографический топ кланов
+
+#Ключ активации плагина
+#Если у тебя его нет, то удаляй плагин :)
+Activation:
+  Key: ""
+
+#Внутриигровой интерфейс при /clan menu
+GUI:
+  #Название предмета (пр.:OAK)
+  material: LOG
+  #Название предмета
+  material2: DIAMOND_BLOCK
+  #Название предмета
+  material3: GOLD_BLOCK
+  #Название предмета
+  material4: IRON_BLOCK
+  #Название предмета
+  material5: GOLD_INGOT
+
+
+#База данных
+#Заменить значение 'Enable' на 'true', чтобы использовать
+MySQL:
+  Enable: false
+  Host: 'localhost'
+  Port: 3306
+  UserName: 'root'
+  Password: ''
+  DataBase: 'mysql'
+
+#Настройки
+SETTINGS:
+  SERVERS_WITH_ALLOW_A_SETHOME_ENABLE: true
+  #Время обновлений клан-топ холограм
+  HOLO_TOP_UPDATE: 3 #в минутах
+  #Сумма создания клана
+  CLAN_CREATE_MONEY: 50000
+  #Максимальное количество участников в клане
+  MAX_MEMBERS_IN_THE_CLAN: 350
+  #Максимальное название клана, если включен таб-суффикс, то обязательно должно быть 11 символов максимально!
+  CLAN_MAX_LENGTH: 11
+  #Минимальное название клана
+  CLAN_MIN_LENGTH: 4
+  #Максимальное название тега клана
+  CLANTAG_MAX_LENGTH: 6
+  #Минимальное название тега клана
+  CLANTAG_MIN_LENGTH: 3
+  #Создавать клан только с одним цветовым кодом
+  ONE_CODE_SYMBOL: true
+  #Сумма смены тега клана
+  MONEY_TAG_COMMAND: 25000
+  #Сумма смены тега клана
+  MONEY_NAME_COMMAND: 30000
+  #Тег в табе %clan_tag_tab%
+  CLAN_TAG_TAB: '&7| {clanname}'
+  #Просто тег %clan_tag%
+  CLAN_TAG: '{clanname}'
+  #Тег в чате !clan_tag_chat!
+  CLAN_TAG_CHAT: '&7[&r{clanname}&7]'
+
+
+#Сообщения
+MESSAGES:
+  NOT_ENOUGH_LEVEL: '&a&lAcidClans &7&l» &fУровень вашего клана слишком низкий для совершения данной операции.'
+  CLAN_LEVEL_UP: '&a&lAcidClans &7&l» &fУровень вашего клана повышен, поздравляем! Теперь ваш клан имеет уровень - {level}!'
+  BALANCE_NOT_PLAYER: '&a&lAcidClans &7&l» &fУ вас недостаточно средств на вашем счету!'
+  NOT_SETHOME_ALLOW_SERVER: '&cНа данном сервере запрещена система клановых домов!'
+  HELP_CLAN_MEMBER: |-
+    &f &f
+    &f                  &7&l« &a&lAcidClans &7&l»
+    &f &7> &a/clan leave &f- покинуть клан
+    &f &7> &a/clan info &f- узнать информацию о клане
+    &f &7> &a/clan menu &f- меню с информацией о клане
+    &f &7> &a/ch [название клана] &f- телепортироваться на кланхом данного клана
+    &f &7> &a/clan balance &f- узнать казну клана
+    &f &7> &a/cc [сообщение] &f- отправить сообщение в клан чат
+    &f &7> &a/clan desposit [сумма] &f- пожертвовать в казну клана
+    &f &f
+  HELP_CLAN_MODER: |-
+    &f &f
+    &f                  &7&l« &a&lAcidClans &7&l»
+    &f &7> &a/clan leave &f- покинуть клан/покинуть пост модератора
+    &f &7> &a/clan info &f- узнать информацию о клане
+    &f &7> &a/clan menu &f- меню с информацией о клане
+    &f &7> &a/ch [название клана] &f- телепортироваться на кланхом данного клана
+    &f &7> &a/cc [сообщение] &f- отправить сообщение в клан чат
+    &f &7> &a/clan invite [ник] &f- пригласить в клан
+    &f &7> &a/clan kick [ник] &f- исключить игрока
+    &f &7> &a/clan msg [сообщение] &f- сделать сообщение всему клану
+    &f &7> &a/clan desposit [сумма] &f- пожертвовать в казну клана
+    &f &f
+  HELP_CLAN_OWNER: |-
+    &f &f
+    &f                  &7&l« &a&lAcidClans &7&l»
+    &f &7> &a/clan disband &f- распустить клан
+    &f &7> &a/clan info &f- узнать информацию о клане
+    &f &7> &a/clan menu &f- меню с информацией о клане
+    &f &7> &a/ch [название клана] &f- телепортироваться на кланхом данного клана
+    &f &7> &a/clan invite [ник] &f- пригласить в клан
+    &f &7> &a/clan kick [ник] &f- исключить игрока
+    &f &7> &a/clan msg [сообщение] &f- сделать сообщение всему клану
+    &f &7> &a/clan promote [ник] &f- назначить игрока на пост модератора
+    &f &7> &a/clan demote [ник] &f- снять игрока с поста модератора
+    &f &7> &a/cc [сообщение] &f- отправить сообщение в клан чат
+    &f &7> &a/clan sethome &f- установить кланхом
+    &f &7> &a/clan tag [тег] &f- сменить тег клана
+    &f &7> &a/clan editname [название] &f- сменить название клана
+    &f &7> &a/clan setmotd [сообщение] &f- установить сообщение дня
+    &f &7> &a/clan take [сумма] &f- взять деньги из казны клана
+    &f &7> &a/clan desposit [сумма] &f- пожертвовать в казну клана
+    &f &7> &a/clan setpublichome &f- сделать кланхом публичным
+    &f &7> &a/clan setprivatehome &f- сделать кланхом приватным
+    &f &f
+  HELP_CLAN: |-
+    &f &f
+    &f                  &7&l« &a&lAcidClans &7&l»
+    &f &7> &a/clan create [название] &f- создать клан
+    &f &7> &a/ch [название] &f- телепортироваться на кланхом данного клана
+    &f &f
+  SENDER_EQUELS_PROMOTE: '&a&lAcidClans &7&l» &fНельзя самого себя ставить на пост модератора!'
+  CLAN_NOT_ONE_CODE_SYMBOL_CREATE: '&a&lAcidClans &7&l» &fМаксимальное количество цветовых кодов: 1. А у вас больше одного!'
+  CLAN_NOT_ONE_CODE_SYMBOL_TAG: '&a&lAcidClans &7&l» &fМаксимальное количество цветовых кодов: 1. А у вас больше одного!'
+  IN_THE_CLAN: '&a&lAcidClans &7&l» &cВы состоите в клане!'
+  CREATE_USAGE: '&a&lAcidClans &7&l» &f/clan create [название] &a- создать клан'
+  NOT_MONEY_CREATE: '&a&lAcidClans &7&l» &fНедостаточно денег! Сумма создания клана: &c{money}'
+  CLAN_MIN_LENGTH: '&a&lAcidClans &7&l» &fМинимальное кол-во символов в название клана: &c{min-length}'
+  CLAN_MAX_LENGTH: '&a&lAcidClans &7&l» &fМаксимальное кол-во символов в название клана: &c{max-length}'
+  CLANTAG_MIN_LENGTH: '&a&lAcidClans &7&l» &fМинимальное кол-во символов в тег клана: &c{ct-min-length}'
+  CLANTAG_MAX_LENGTH: '&a&lAcidClans &7&l» &fМаксимальное кол-во символов в тег клана: &c{ct-max-length}'
+  CLAN_CREATED: '&a&lAcidClans &7&l» &fКлан "&r{clanname}&f" &fсоздан!'
+  NOT_IN_THE_CLAN: '&a&lAcidClans &7&l» &cВы не состоите в клане!'
+  NOT_OWNER_DISBAND: '&a&lAcidClans &7&l» &cВы не владелец клана, чтоб его удалять!'
+  FOR_OWNER_DISBANDED: '&a&lAcidClans &7&l» &fКлан &r"{clanname}&f" удален!'
+  FOR_MEMBERS_DISBANDED: '&a&lAcidClans &7&l» &fВладелец &c{owner} &fраспустил клан'
+  NOT_CLAN_INFO: '&a&lAcidClans &7&l» &cТакого клана не существует!'
+  CLAN_INFO: |-
+    &a&lAcidClans &7&l» &fИнформация о вашем клане "{clanname}&f":
+         &7> &fВладелец: &6{owner}
+         &7> &fМодераторы &8({moders-size})&f: &a{moders}
+         &7> &fУчастники &8(&6{members-size}&8/&c{max-size-members}&8)&f: &b{members}
+         &7> &fДата создания: &c{data}
+         &7> &fПриветствие: &r{welcome}
+  NOT_OWNER_SETMOTD: '&a&lAcidClans &7&l» &cВы не владелец клана, чтоб устанавливать сообщения дня'
+  NOT_OWNER_KICKED: '&a&lAcidClans &7&l» &cВы не можете кикнуть владельца'
+  SETMOTD_USAGE: '&a&lAcidClans &7&l» &f/clan setmotd [сообщение] &a- установить сообщение дня'
+  SET_MOTD_CLAN: '&a&lAcidClans &7&l» &fВы установили сообщение дня: {welcome}'
+  NOT_OWNER_SETHOME: '&a&lAcidClans &7&l» &fВы не лидер клана, чтоб устанавливать клан хом'
+  SET_HOME_CLAN: '&a&lAcidClans &7&l» &fКлан дом установлен!'
+  CLAN_NOT_EXIT: '&a&lAcidClans &7&l» &fКлан с таким названием уже существует!'
+  CLAN_NOT_NAME: '&a&lAcidClans &7&l» &fВаш клан не содержит названия!'
+  BLOCK_SYMBOL: '&a&lAcidClans &7&l» &fВ название клана есть - запрещенные символы!'
+  NOT_OWNER_AND_MODER_KICK: '&a&lAcidClans &7&l» &fВы не лидер и не модератор клана!'
+  KICK_USAGE: '&a&lAcidClans &7&l» &f/clan kick [ник] &a- исключить игрока из клана'
+  NOT_PLAYER_ONLINE: '&a&lAcidClans &7&l» &fИгрок &c{player} &fне онлайн'
+  NOT_PLAYER_MY_CLAN: '&a&lAcidClans &7&l» &fИгрок &c{player} не состоит в вашем клане!'
+  ERROR_MEMBER_IS_MODER: '&a&lAcidClans &7&l» &fИгрок является модератором клана, уберите его с модератора, чтоб исключить!'
+  KICK_ME: '&a&lAcidClans &7&l» &fНельзя кикнуть самого себя'
+  YOU_KICK_CLAN: '&a&lAcidClans &7&l» &fВы исключены из клана!'
+  FOR_MEMBERS_KICK: '&a&lAcidClans &7&l» &fИгрок &c{player} &fисключен из клана!'
+  CLAN_NOT_HOME: '&a&lAcidClans &7&l» &cКлан не имеет клан дома!'
+  TELEPORT_CLAN_HOME: '&a&lAcidClans &7&l» &fВы телепортировались на клан дом!'
+  TELEPORT_CLAN_HOME_PRIVATE: '&a&lAcidClans &7&l» &fТелепортироваться на данный клан дом нельзя!'
+  CLAN_HOME_PRIVATE: '&a&lAcidClans &7&l» &fВы сделали Ваш клановый дом &cприватным!'
+  CLAN_HOME_PUBLIC: '&a&lAcidClans &7&l» &fВы сделали Ваш клановый дом &aпубличным!'
+  NOT_OWNER_DELHOME: '&a&lAcidClans &7&l» &fВы не лидер клана!'
+  CLAN_DELETED_HOME: '&a&lAcidClans &7&l» &fКлан дом удален!'
+  NOT_OWNER_AND_MODER_INVITE: '&a&lAcidClans &7&l» &cЧтоб приглашать в клан надо иметь мин. модератора клана'
+  REQUEST_IS_FROM: '&a&lAcidClans &7&l» &fДождитесь ответа по прошлому приглашению!'
+  INVITE_USAGE: '&a&lAcidClans &7&l» &f/clan invite [ник] &a- пригласить игрока в клан'
+  SENDER_EQUELS_ADDER: '&a&lAcidClans &7&l» &fНельзя самого себя приглашать в клан!'
+  IN_THE_CLAN_PLAYER: '&a&lAcidClans &7&l» &fИгрок &c{player} &fсостоит в клане!'
+  REQUEST_IS_TO: '&a&lAcidClans &7&l» &fИгрок &c{player} &fрассматривает другое приглашение!'
+  CLICK_AND_HOVER_MESSAGE:
+    ACCEPT: '&a&l[ПРИНЯТЬ]'
+    DENY: '&c&l[ОТКЛОНИТЬ]'
+    ACCEPT_INFO: '&eПрисоеденится к клану'
+    DENY_INFO: '&cОтменить приглашение'
+  YOU_IVNITED_CLAN: '&a&lAcidClans &7&l» &fВы пригласили игрока &a{player} &fв клан!'
+  NOTIFICATION_CLAN_INVITE: |-
+    &f                &7&l« &a&lAcidClans &7&l»
+    &f   Игрок &c{player} &fвас приглашает в клан "&r{clanname}&f"
+  NO_PERM: '&a&lAcidClans &7&l» &fНет прав!'
+  DELTOP_USAGE: '&a&lAcidClans &7&l» &f/clan deltop [название топа] &a- убрать холо-топ'
+  NOT_DEL_TOP: '&a&lAcidClans &7&l» &fДанный топ не существует!'
+  DELETED_TOP_CLAN: '&a&lAcidClans &7&l» &fДанный топ удален!'
+  NOT_LEAVE_IS_OWNER: '&a&lAcidClans &7&l» &fВы не можете покинуть клан, вы лидер клана'
+  LEAVE_MODER: '&a&lAcidClans &7&l» &fВы покинули пост модератора'
+  FOR_MEMBERS_LEAVE_MODER: '&a&lAcidClans &7&l» &fИгрок &c{player} &fпокинул пост модератора'
+  LEAVE_CLAN: '&a&lAcidClans &7&l» &fВы покинули клан'
+  FOR_MEMBERS_LEAVE: '&a&lAcidClans &7&l» &fИгрок &c{player} &fпокинул клан'
+  NOT_OWNER_TAG: '&a&lAcidClans &7&l» &fВы не лидер клана!'
+  TAG_USAGE: '&a&lAcidClans &7&l» &f/clan tag [тег] &a- изменить тэг клана'
+  OLD_TAG_CHANGE: '&a&lAcidClans &7&l» &fНельзя ставить то же название клана!'
+  NOT_OWNER_NAME: '&a&lAcidClans &7&l» &fВы не лидер клана!'
+  NAME_USAGE: '&a&lAcidClans &7&l» &f/clan editname [назвавние клана] &a- изменить название клана'
+  OLD_NAME_CHANGE: '&a&lAcidClans &7&l» &fНельзя ставить то же название клана!'
+  CLAN_TAG_IS_EMPTY: '&a&lAcidClans &7&l» &fВаш клан не содержит тега!'
+  CLAN_NAME_IS_EMPTY: '&a&lAcidClans &7&l» &fВаш клан не содержит названия!'
+  NOT_MONEY_TAG: '&a&lAcidClans &7&l» &fНедостаточно денег для смены тега клана. Стоимость смены: &c{price-change}'
+  NOT_MONEY_NAME: '&a&lAcidClans &7&l» &fНедостаточно денег для смены названия клана. Стоимость смены: &c{price-change}'
+  BLOCK_SYMBOL_CLAN_TAG: '&a&lAcidClans &7&l» &fВ название клана есть - запрещенные символы!'
+  CLAN_TAG_CHANGE: '&a&lAcidClans &7&l» &fТег клана &r{old-tag} &fизменён на {tag}'
+  CLAN_NAME_CHANGE: '&a&lAcidClans &7&l» &fКлан &r{old-name} &fпереименован в клан {name}'
+  NOT_OWNER_AND_MODER_MSG: '&a&lAcidClans &7&l» &cЧтоб отправлять объявления надо иметь мин. модератора клана'
+  BROADCAST_CLAN: '&e&lОбъявление &7> &f{message}'
+  NOT_OWNER_PROMOTE: '&a&lAcidClans &7&l» &fВы не лидер клана!'
+  PROMOTE_USAGE: '&a&lAcidClans &7&l» &f/clan promote [ник] &a- назначить на пост модератора'
+  NOT_IN_THE_MY_CLAN: '&a&lAcidClans &7&l» &fИгрок &c{player} &fне состоит в вашем клане!'
+  IS_MODER_CLAN: '&a&lAcidClans &7&l» &fИгрок &c{player} &fуже является модератором!'
+  MEMBER_INFO_SET_MODER: '&a&lAcidClans &7&l» &fВы на значены на пост модератора!'
+  FOR_MEMBERS_INFO_SET_MODER: '&a&lAcidClans &7&l» &fИгрок &c{player} &fназначен на пост модератора'
+  NOT_OWNER_DEMOTE: '&a&lAcidClans &7&l» &fВы не лидер клана!'
+  DEMOTE_USAGE: '&a&lAcidClans &7&l» &f/clan demote [ник] &a- снять с поста модератора'
+  NOT_IS_MODER_CLAN: '&a&lAcidClans &7&l» &fИгрок &c{player} &fне является модератором!'
+  MEMBER_INFO_DEL_MODER: '&a&lAcidClans &7&l» &fВы сняты с поста модератора!'
+  FOR_MEMBERS_INFO_DEL_MODER: '&a&lAcidClans &7&l» &fИгрок &c{player} &fснят с поста модератора'
+  DESPOSIT_USAGE: '&a&lAcidClans &7&l» &f/clan desposit [сумма] &a- пополнить казну клана'
+  ERROR_PRICE: '&a&lAcidClans &7&l» &cНеверно указана сумма!'
+  BALANCE_CLAN_DESPOSIT: |-
+    &a&lAcidClans &7&l» &fВы пополнили казну клана на сумму &c{money}&f$
+    &a&lAcidClans &7&l» &fНовый баланс клана: &a{new-balance}&f$
+  FOR_MEMBERS_DESPOSIT: '&a&lAcidClans &7&l» &fИгрок &c{player} &fпополнил казну клана на сумму &a{money} &f$'
+  BALANCE_INFO: '&a&lAcidClans &7&l» &fБаланс клана: &a{money} &f$'
+  NOT_OWNER_TAKE: '&a&lAcidClans &7&l» &fВы не лидер клана, чтоб снимать деньги с казны клана!'
+  TAKE_USAGE: '&a&lAcidClans &7&l» &f/clan take [сумма] &a- взять денег из казны клана'
+  NOT_FOUND_BALANCE: '&a&lAcidClans &7&l» &cУ клана нету казны, чтобы снять деньги!'
+  BALANCE_CLAN_TAKE: |-
+    &a&lAcidClans &7&l» &fВы взяли из казны клана - сумму &c{money}&f$
+    &a&lAcidClans &7&l» &fНовый баланс клана: &a{new-balance}&f$
+  FOR_MEMBERS_TAKE: '&a&lAcidClans &7&l» &fВладелец клана &c{player} &fвзял из казны клана сумму &a{money} &f$'
+  NOT_REQUESTS: '&a&lAcidClans &7&l» &fУ вас нету приглашений в клан!'
+  DENY_REQUEST: '&a&lAcidClans &7&l» &fВы отказались от приглашения в клан'
+  ACCEPT_REQUEST: '&a&lAcidClans &7&l» &fВы приняли приглашения в клан!'
+  FOR_MEMBERS_ACCEPT: |-
+    &r                  &7&l« &r"{clanname}&r" &7&l»
+    {clanname} &7> &fИгрок &c{player} &fприсоеденился к клану!
+  LIST_FORMAT_TOP: '&7> &c{top-name}'
+  LIST_NULL: '&a&lAcidClans &7&l» &fНету ни одного клан топа!'
+  LIST_TOPNAME: '&a&lAcidClans &7&l» &fСписок клан топов: {new}{list-top}'
+  SETTOP_USAGE: '&a&lAcidClans &7&l» &f/clan settop [название топа] [значения топ] &a- установить холо-топ'
+  NOT_TOP_IS_EMPTY: '&a&lAcidClans &7&l» &fДанный топ уже существует!'
+  CREATE_TOP_HOLO: '&a&lAcidClans &7&l» &fТоп &e{topname} &fсоздан!'
+  ERROR_TYPE: '&a&lAcidClans &7&l» &fНеверное значение топа! Доступные значения: MEMBERS, BANK'
+  CLAN_TOP_RELOAD: '&a&lAcidClans &7&l» &fКлан топы успешно перезагружены!'
+  CLANCHAT_USAGE: '&a&lAcidClans &7&l» &f/cc [сообщение] - &aнаписать в клан-чат'
+  FORMAT_CHAT:
+    OWNER_CLAN: '&7&l« &a&lAcidClans &7&l» &f| &6{player} &f: &r{message}'
+    MODER_CLAN: '&7&l« &a&lAcidClans &7&l» &f| &a{player} &f: &r{message}'
+    MEMBER_CLAN: '&7&l« &a&lAcidClans &7&l» &f| &b{player} &f: &r{message}'
+  CLANHOME_USAGE: '&a&lAcidClans &7&l» &f/ch [название клана]'
+  CLANHOME_NULL: '&a&lAcidClans &7&l» &cКлан не имеет клан дома!'
+  TELEPORT_CLANHOME: '&a&lAcidClans &7&l» &fВы телепортировались на клан-хом данного клана'
+  CLAN_NULL: '&a&lAcidClans &7&l» &fДанного клана не существует!'
+  WELCOME_CLAN_JOIN: |-
+    &f                         &7&l« &r"{clanname}&r" &7&l»
+    &fСообщение дня клана: &r{welcome}
+  REQUEST_DENY: '&a&lAcidClans &7&l» &fИгрок не принял приглашение в клан'
+  REQUEST_DENY_YOU: '&a&lAcidClans &7&l» &fВы не приняли приглашение в клан.'
+
+
+
+
+#Холограмы - клан-топ
+HOLOGRAPHICDISPLAY-TOP:
+  #Клан-топ по значению: БАНК
+  BANK:
+    #Заголовок холограмы
+    TITLE: '&a&lAcidClans &7&l» &7Топ кланов (&fПо количеству казны&7)'
+    #Обычная строка с лидером, название клана и т.д.
+    LINE: '&f{number}&a. &r{clanname} &7 | &fЛидер: &c{admin} &7 | &fКазна: &b{bank} &7| &fДата создания: &d{data} &7| {clantag}'
+    #Обычная строка без всего
+    LINE_NULL: '&f{number}&a. &fПусто &e| &fПусто'
+    #Последняя строка
+    LINE_ADDON: 'Обновление топа раз в &c&l5 минут'
+
+
+
+  #Клан-топ по значению: Участники
+  MEMBERS:
+    #Заголовок холограмы
+    TITLE: '&a&lAcidClans &7&l» &7Топ кланов (&fПо количеству участников&7)'
+    #Обычная строка с лидером, название клана и т.д.
+    LINE: '&f{number}&a. &r{clanname} &7 | &fЛидер: &c{admin} &7 | &fУчастников: &b{members} &7| &fДата создания: &d{data} &7| {clantag}'
+    #Обычная строка без всего
+    LINE_NULL: '&f{number}&a. &fПусто &e| &fПусто'
+    #Последняя строка
+    LINE_ADDON: 'Обновление топа раз в &c&l5 минут'

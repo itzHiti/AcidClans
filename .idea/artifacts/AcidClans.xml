@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AcidClans">
+    <output-path>$USER_HOME$/Desktop/GG/Minecraft/1название/Anarchy/plugins</output-path>
+    <root id="archive" name="AcidClans.jar">
+      <element id="module-output" name="AcidClans" />
+    </root>
+  </artifact>
+</component>

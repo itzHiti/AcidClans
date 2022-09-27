@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="3 common library">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/GG/Minecraft/mcplugintester/plugins/holographicdisplays.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/GG/Minecraft/mcplugintester/plugins/nametagedit.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/GG/Minecraft/mcplugintester/plugins/Vault-1.6.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
